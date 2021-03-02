@@ -47,17 +47,15 @@ public class lectorArchivo {
                 while ((aux = lee.readLine()) != null) {
                     texto = aux;
                     lista.add(texto);
-                    lista.split("");
-                    for(int i=0;i<lista.size();i++){
-
+                String[] caract =    texto.split("");
+                    for(int i=0;i<caract.length;i++){
+                            System.out.println(caract[i]);
 }
                 }
                 lee.close();
                 System.out.println(lista.size());
                 
-for(int i=0;i<lista.size();i++){
 
-}
                          
             }
         } catch (IOException ex) {
