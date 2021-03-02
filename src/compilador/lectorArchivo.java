@@ -16,6 +16,7 @@ public class lectorArchivo {
      */
     public static void main(String[] args) {
    int fers;
+   int carliwis;
     }
     
 }
