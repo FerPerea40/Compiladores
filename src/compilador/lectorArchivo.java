@@ -71,70 +71,111 @@ public class lectorArchivo {
         int carliwis;
         lectorArchivo la = new lectorArchivo();
         FileReader archivos = new FileReader(la.leerDatos());
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
+        String palabra = la.tokenizar(archivos);
+        String palabra2 = la.tokenizar(archivos);
+        String palabra3 = la.tokenizar(archivos);
+        System.out.println(palabra);
+        System.out.println(palabra2);
+        System.out.println(palabra3);
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//
+//        //AQUI SE PASA DE LOS DATOS DEL ARCHIVO
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
+//        System.out.println(la.leyendo(archivos));
 
-        //AQUI SE PASA DE LOS DATOS DEL ARCHIVO
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-        System.out.println(la.leyendo(archivos));
-      
     }
-    
-    public String tokeniar(char caract){
-    String cadena = new String(" ");
-    if(caract == 95 || (caract>=65 && caract<=90) || (caract>=97 && caract<=122)){
-      cadena+=caract;
-    
-    }else{
-      if(caract>=48 && caract<=57){
-      
-      }else{
-        if(caract == 32){
-         return cadena;
+
+    public String tokenizar(FileReader archivos) throws IOException {
+        String cadena = "";
+        char caract = leyendo(archivos);
+        System.out.println("AQUI ANDO QLO: "+caract);
+        if (caract == 95 || (caract >= 65 && caract <= 90) || (caract >= 97 && caract <= 122)) {
+            cadena += caract;
+            caract = leyendo(archivos);
+            while ((caract >= 65 && caract <= 90) || (caract >= 97 && caract <= 122)) {
+                cadena += caract;
+                caract = leyendo(archivos);
+            }
+            //caract = leyendo(archivos);
+            System.out.println(caract);
+            if (caract == 95 || (caract >= 48 && caract <= 57)) {
+                System.out.println("Hola perro");
+                cadena += caract;
+                caract = leyendo(archivos);
+                while (caract >= 48 && caract <= 57) {
+                    cadena += caract;
+                    
+                    caract = leyendo(archivos);
+                }
+            }
+            
+            //caract = aux;
+            System.out.println("En este me quedo perro "+caract);
+            return cadena;
+        } else if (caract >= 48 && caract <= 57) {
+            cadena += caract;
+            caract = leyendo(archivos);
+            while (caract >= 48 && caract <= 57) {
+                cadena += caract;
+                caract = leyendo(archivos);
+            }
+            if (caract == 46) {
+                cadena += caract;
+                caract = leyendo(archivos);
+            }
+            while (caract >= 48 && caract <= 57) {
+                cadena += caract;
+                caract = leyendo(archivos);
+            }
+            return cadena;
+        }else{
+            System.out.println(caract);
+            cadena += caract;
+            return cadena;
         }
-      }
+        
+        //return cadena;
+       
     }
-    
-    return null;
-    }
-    
+
+    // (_)?([a-z]|[A-Z])+(_)?([0-9])*
+    // [0-9]+ (/.)* [0-9]*
     //_ -> 95
     //A-Z -> 65 - 90
     //a -z -> 97 - 122
     //0-9 -> 48 - 57
     //. -> 46
-
 }
