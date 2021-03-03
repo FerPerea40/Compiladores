@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import static java.lang.System.exit;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
@@ -31,96 +32,109 @@ public class lectorArchivo {
 
         String texto, aux;
         ArrayList<String> lista = new ArrayList();
-        
-            //llamamos el metodo que permite cargar la ventana
-           JFileChooser file = new JFileChooser();
-           file.showOpenDialog(file);
-            // FileReader fr = new FileReader("C:\\Users\\carli\\Desktop\\iris.data"); 
-            //abrimos el archivo seleccionado
-            File abre = file.getSelectedFile();
 
-            //recorremos el archivo y lo leemos
-            if (abre != null) {
-              // System.out.print("saque: "+leyendo(abre));
-                 return abre;
-            }
-        
-     return null;
+        //llamamos el metodo que permite cargar la ventana
+        JFileChooser file = new JFileChooser();
+        file.showOpenDialog(file);
+        // FileReader fr = new FileReader("C:\\Users\\carli\\Desktop\\iris.data"); 
+        //abrimos el archivo seleccionado
+        File abre = file.getSelectedFile();
+
+        //recorremos el archivo y lo leemos
+        if (abre != null) {
+            // System.out.print("saque: "+leyendo(abre));
+            return abre;
+        }
+
+        return null;
     }
 
     public char leyendo(FileReader archivos) throws FileNotFoundException, IOException {
 
         BufferedReader lee = new BufferedReader(archivos);
         int caract = archivos.read();
-//        if (caract == -1) {
-//        //    imprimiendo((char)caract);
-//                     
-//        return 0;
-//        }else{
-//        caract = archivos.read();   
-//            return (char)caract;
-//        }
-        if(caract == -1){
-      return 0;}
+
+        if (caract == -1) {
+            exit(0);
+        }
         //return 0;
-       return (char)caract;
+        return (char) caract;
 
     }
-    
-    public void imprimiendo(char caracter){
+
+    public void imprimiendo(char caracter) {
         System.out.println(caracter);
     }
+
     public static void main(String[] args) throws IOException {
         int fers;
         int carliwis;
         lectorArchivo la = new lectorArchivo();
         FileReader archivos = new FileReader(la.leerDatos());
-     System.out.println(la.leyendo(archivos));
-      System.out.println(la.leyendo(archivos));
-     System.out.println(la.leyendo(archivos));
-  System.out.println(la.leyendo(archivos));
-      System.out.println(la.leyendo(archivos));
-     System.out.println(la.leyendo(archivos));
-       System.out.println(la.leyendo(archivos));
-      System.out.println(la.leyendo(archivos));
-     System.out.println(la.leyendo(archivos));
-  System.out.println(la.leyendo(archivos));
-      System.out.println(la.leyendo(archivos));
-     System.out.println(la.leyendo(archivos));
-     System.out.println(la.leyendo(archivos));
-  System.out.println(la.leyendo(archivos));
-      System.out.println(la.leyendo(archivos));
-     System.out.println(la.leyendo(archivos));
-       System.out.println(la.leyendo(archivos));
-      System.out.println(la.leyendo(archivos));
-     System.out.println(la.leyendo(archivos));
-  System.out.println(la.leyendo(archivos));
-      System.out.println(la.leyendo(archivos));
-System.out.println(la.leyendo(archivos));
-     System.out.println(la.leyendo(archivos));
-  System.out.println(la.leyendo(archivos));
-      System.out.println(la.leyendo(archivos));
-       System.out.println(la.leyendo(archivos));
-  System.out.println(la.leyendo(archivos));
-      System.out.println(la.leyendo(archivos));
-System.out.println(la.leyendo(archivos));
-     System.out.println(la.leyendo(archivos));
-  System.out.println(la.leyendo(archivos));
-      System.out.println(la.leyendo(archivos));
-      System.out.println(la.leyendo(archivos));
-      
-      
-      System.out.println(la.leyendo(archivos));
-      System.out.println(la.leyendo(archivos));
-      System.out.println(la.leyendo(archivos));
-      System.out.println(la.leyendo(archivos));
-            
-      
-      System.out.println(la.leyendo(archivos));
-      System.out.println(la.leyendo(archivos));
-      System.out.println(la.leyendo(archivos));
-      System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
 
+        //AQUI SE PASA DE LOS DATOS DEL ARCHIVO
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+        System.out.println(la.leyendo(archivos));
+      
     }
+    
+    public String tokeniar(char caract){
+    String cadena = new String(" ");
+    if(caract == 95 || (caract>=65 && caract<=90) || (caract>=97 && caract<=122)){
+      cadena+=caract;
+    
+    }else{
+      if(caract>=48 && caract<=57){
+      
+      }else{
+        if(caract == 32){
+         return cadena;
+        }
+      }
+    }
+    
+    return null;
+    }
+    
+    //_ -> 95
+    //A-Z -> 65 - 90
+    //a -z -> 97 - 122
+    //0-9 -> 48 - 57
+    //. -> 46
 
 }
