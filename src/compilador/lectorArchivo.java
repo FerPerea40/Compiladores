@@ -26,53 +26,101 @@ public class lectorArchivo {
     //caracteres alfanuméricos. Implementar un método que retorne el carácter en el que va en el archivo.
     //En otro método imprimir a pantalla los caracteres que arroja la 
     //clase anterior (Dependiendo de cuantas veces se mande llamar el primer método serían los caracteres que mostraría a pantalla).
-    public static void leerDatos() throws IOException {
+    public File leerDatos() throws IOException {
         // ventana para abrir el txt
 
         String texto, aux;
         ArrayList<String> lista = new ArrayList();
-        try {
+        
             //llamamos el metodo que permite cargar la ventana
-            JFileChooser file = new JFileChooser();
-            file.showOpenDialog(file);
+           JFileChooser file = new JFileChooser();
+           file.showOpenDialog(file);
             // FileReader fr = new FileReader("C:\\Users\\carli\\Desktop\\iris.data"); 
             //abrimos el archivo seleccionado
             File abre = file.getSelectedFile();
 
             //recorremos el archivo y lo leemos
             if (abre != null) {
-                leyendo(abre);
-
+              // System.out.print("saque: "+leyendo(abre));
+                 return abre;
             }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, ex + ""
-                    + "\nNo se ha encontrado el archivo",
-                    "ADVERTENCIA!!!", JOptionPane.WARNING_MESSAGE);
-        }
-
+        
+     return null;
     }
 
-    public static void leyendo(File abre) throws FileNotFoundException, IOException {
-        FileReader archivos = new FileReader(abre);
+    public char leyendo(FileReader archivos) throws FileNotFoundException, IOException {
+
         BufferedReader lee = new BufferedReader(archivos);
         int caract = archivos.read();
-        while (caract != -1) {
-            imprimiendo((char)caract);
-            caract = archivos.read();
-        }
-        lee.close();
-        archivos.close();
-        //System.out.println(lista.size());
+//        if (caract == -1) {
+//        //    imprimiendo((char)caract);
+//                     
+//        return 0;
+//        }else{
+//        caract = archivos.read();   
+//            return (char)caract;
+//        }
+        if(caract == -1){
+      return 0;}
+        //return 0;
+       return (char)caract;
+
     }
     
-    public static void imprimiendo(char caracter){
+    public void imprimiendo(char caracter){
         System.out.println(caracter);
     }
     public static void main(String[] args) throws IOException {
         int fers;
         int carliwis;
+        lectorArchivo la = new lectorArchivo();
+        FileReader archivos = new FileReader(la.leerDatos());
+     System.out.println(la.leyendo(archivos));
+      System.out.println(la.leyendo(archivos));
+     System.out.println(la.leyendo(archivos));
+  System.out.println(la.leyendo(archivos));
+      System.out.println(la.leyendo(archivos));
+     System.out.println(la.leyendo(archivos));
+       System.out.println(la.leyendo(archivos));
+      System.out.println(la.leyendo(archivos));
+     System.out.println(la.leyendo(archivos));
+  System.out.println(la.leyendo(archivos));
+      System.out.println(la.leyendo(archivos));
+     System.out.println(la.leyendo(archivos));
+     System.out.println(la.leyendo(archivos));
+  System.out.println(la.leyendo(archivos));
+      System.out.println(la.leyendo(archivos));
+     System.out.println(la.leyendo(archivos));
+       System.out.println(la.leyendo(archivos));
+      System.out.println(la.leyendo(archivos));
+     System.out.println(la.leyendo(archivos));
+  System.out.println(la.leyendo(archivos));
+      System.out.println(la.leyendo(archivos));
+System.out.println(la.leyendo(archivos));
+     System.out.println(la.leyendo(archivos));
+  System.out.println(la.leyendo(archivos));
+      System.out.println(la.leyendo(archivos));
+       System.out.println(la.leyendo(archivos));
+  System.out.println(la.leyendo(archivos));
+      System.out.println(la.leyendo(archivos));
+System.out.println(la.leyendo(archivos));
+     System.out.println(la.leyendo(archivos));
+  System.out.println(la.leyendo(archivos));
+      System.out.println(la.leyendo(archivos));
+      System.out.println(la.leyendo(archivos));
+      
+      
+      System.out.println(la.leyendo(archivos));
+      System.out.println(la.leyendo(archivos));
+      System.out.println(la.leyendo(archivos));
+      System.out.println(la.leyendo(archivos));
+            
+      
+      System.out.println(la.leyendo(archivos));
+      System.out.println(la.leyendo(archivos));
+      System.out.println(la.leyendo(archivos));
+      System.out.println(la.leyendo(archivos));
 
-        lectorArchivo.leerDatos();
     }
 
 }
