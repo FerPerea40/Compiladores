@@ -178,7 +178,7 @@ public class lectorArchivo {
                 caract = leyendo(archivos);
                 cadena += caract;
             }
-           if (caract == 95 || (caract >= 48 && caract <= 57)) {
+           if (caract == 95 || (caract >= 48 && caract <= 57)) {//ESTE IF
                 caract = leyendo(archivos);
                 cadena += caract;
                 while (caract >= 48 && caract <= 57) {
@@ -195,7 +195,7 @@ public class lectorArchivo {
                 caract = leyendo(archivos);
                 cadena += caract;
             }
-            if (caract == 46) {
+            if (caract == 46) { // ESTE IF
                 caract = leyendo(archivos);
                 cadena += caract;
             }
