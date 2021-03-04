@@ -27,6 +27,7 @@ public class lectorArchivo {
     //caracteres alfanuméricos. Implementar un método que retorne el carácter en el que va en el archivo.
     //En otro método imprimir a pantalla los caracteres que arroja la 
     //clase anterior (Dependiendo de cuantas veces se mande llamar el primer método serían los caracteres que mostraría a pantalla).
+    char comparar;
     public File leerDatos() throws IOException {
         // ventana para abrir el txt
 
@@ -50,16 +51,11 @@ public class lectorArchivo {
     }
 
     public char leyendo(FileReader archivos) throws FileNotFoundException, IOException {
-
-        BufferedReader lee = new BufferedReader(archivos);
         int caract = archivos.read();
-
         if (caract == -1) {
             exit(0);
         }
-        //return 0;
         return (char) caract;
-
     }
 
     public void imprimiendo(char caracter) {
@@ -69,14 +65,18 @@ public class lectorArchivo {
     public static void main(String[] args) throws IOException {
         int fers;
         int carliwis;
+        char caracterprincipal;
         lectorArchivo la = new lectorArchivo();
         FileReader archivos = new FileReader(la.leerDatos());
+        la.comparar = la.leyendo(archivos);
         String palabra = la.tokenizar(archivos);
         String palabra2 = la.tokenizar(archivos);
         String palabra3 = la.tokenizar(archivos);
+        String palabra4 = la.tokenizar(archivos);
         System.out.println(palabra);
         System.out.println(palabra2);
         System.out.println(palabra3);
+        System.out.println(palabra4);
 //        System.out.println(la.leyendo(archivos));
 //        System.out.println(la.leyendo(archivos));
 //        System.out.println(la.leyendo(archivos));
@@ -120,8 +120,7 @@ public class lectorArchivo {
 
     public String tokenizar(FileReader archivos) throws IOException {
         String cadena = "";
-        char caract = leyendo(archivos);
-        
+        char caract = comparar;
         if (caract == 95 || (caract >= 65 && caract <= 90) || (caract >= 97 && caract <= 122)) {
             cadena += caract;
             caract = leyendo(archivos);
@@ -129,15 +128,16 @@ public class lectorArchivo {
                 cadena += caract;
                 caract = leyendo(archivos);
             }
-           if (caract == 95 || (caract >= 48 && caract <= 57)) {
+            if (caract == 95 || (caract >= 48 && caract <= 57)) {
                 cadena += caract;
                 caract = leyendo(archivos);
                 while (caract >= 48 && caract <= 57) {
                     cadena += caract;
-
                     caract = leyendo(archivos);
                 }
             }
+            comparar = caract;
+            //System.out.println(comparar);
             return cadena;
         } else if (caract >= 48 && caract <= 57) {
             cadena += caract;
@@ -154,23 +154,39 @@ public class lectorArchivo {
                 cadena += caract;
                 caract = leyendo(archivos);
             }
+            comparar = caract;
+            //System.out.println(comparar);
+            return cadena;
+        }else if(caract == 60 || caract == 62 || caract == 33){
+            cadena+=caract;
+            caract = leyendo(archivos);
+            if(caract == 61){
+                cadena+=caract;
+                caract = leyendo(archivos);
+            }
+            comparar = caract;
+            return cadena;
+        }else if(caract == 38){
+            cadena+=caract;
+            caract = leyendo(archivos);
+            if(caract == 61){
+                cadena+=caract;
+                caract = leyendo(archivos);
+            }
+            comparar = caract;
             return cadena;
         } else {
-
-            System.out.println("ee" + caract);
             cadena += caract;
+            comparar = leyendo(archivos);
             return cadena;
         }
 
     }
 
-    
-    
-    
-       public String tokenizar2(FileReader archivos) throws IOException {
+    public String tokenizar2(FileReader archivos) throws IOException {
         String cadena = "";
         char caract = leyendo(archivos);
-        
+
         if (caract == 95 || (caract >= 65 && caract <= 90) || (caract >= 97 && caract <= 122)) {
             cadena += caract;
             caract = leyendo(archivos);
@@ -178,17 +194,17 @@ public class lectorArchivo {
                 caract = leyendo(archivos);
                 cadena += caract;
             }
-           if (caract == 95 || (caract >= 48 && caract <= 57)) {//ESTE IF
+            if (caract == 95 || (caract >= 48 && caract <= 57)) {//ESTE IF
                 caract = leyendo(archivos);
                 cadena += caract;
                 while (caract >= 48 && caract <= 57) {
                     caract = leyendo(archivos);
                     cadena += caract;
-                 }
+                }
             }
             return cadena;
         } else if (caract >= 48 && caract <= 57) {
-                        caract = leyendo(archivos);
+            caract = leyendo(archivos);
 
             cadena += caract;
             while (caract >= 48 && caract <= 57) {
@@ -200,15 +216,15 @@ public class lectorArchivo {
                 cadena += caract;
             }
             while (caract >= 48 && caract <= 57) {
-                                caract = leyendo(archivos);
+                caract = leyendo(archivos);
 
                 cadena += caract;
             }
             return cadena;
-        } else {
+        }else {
 
             System.out.println("ee" + caract);
-            String cad =""+ caract;
+            String cad = "" + caract;
             return cad;
         }
 
