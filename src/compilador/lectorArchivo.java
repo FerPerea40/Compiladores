@@ -49,9 +49,9 @@ public class lectorArchivo {
 
     public char leyendo(FileReader archivos) throws FileNotFoundException, IOException {
         int caract = archivos.read();
-        if (caract == -1) {
-            exit(0);
-        }
+  //      if (caract == -1) {
+     //       exit(0);
+    //    }
         return (char) caract;
     }
 
