@@ -157,7 +157,7 @@ public class lectorArchivo {
             comparar = caract;
             //System.out.println(comparar);
             return cadena;
-        }else if(caract == 60 || caract == 62 || caract == 33){
+        }else if(caract == 60 || caract == 62 || caract == 33 || caract == 47 || caract == 42 || caract == 43 || caract == 45){
             cadena+=caract;
             caract = leyendo(archivos);
             if(caract == 61){
@@ -169,13 +169,49 @@ public class lectorArchivo {
         }else if(caract == 38){
             cadena+=caract;
             caract = leyendo(archivos);
+            if(caract == 38){
+                cadena+=caract;
+                caract = leyendo(archivos);
+            }
+            comparar = caract;
+            return cadena;
+        } else if(caract == 124){
+            cadena+=caract;
+            caract = leyendo(archivos);
+            if(caract == 124){
+                cadena+=caract;
+                caract = leyendo(archivos);
+            }
+            comparar = caract;
+            return cadena;
+        }else if(caract == 43){
+            cadena+=caract;
+            caract = leyendo(archivos);
+            if(caract == 43){
+                cadena+=caract;
+                caract = leyendo(archivos);
+            }
+            comparar = caract;
+            return cadena;
+        }else if(caract == 45){
+            cadena+=caract;
+            caract = leyendo(archivos);
+            if(caract == 45){
+                cadena+=caract;
+                caract = leyendo(archivos);
+            }
+            comparar = caract;
+            return cadena;
+        }else if(caract == 61){
+            cadena+=caract;
+            caract = leyendo(archivos);
             if(caract == 61){
                 cadena+=caract;
                 caract = leyendo(archivos);
             }
             comparar = caract;
             return cadena;
-        } else {
+        }else {
             cadena += caract;
             comparar = leyendo(archivos);
             return cadena;
