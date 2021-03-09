@@ -205,7 +205,7 @@ public class lectorArchivo {
             }
             comparar = caract;
             return cadena;
-        }  else if (caract == 33) { //!!
+        }  else if (caract == 33) { //!!...
             cadena += caract;
             caract = leyendo(archivos);
             if (caract == 33) {
