@@ -149,6 +149,8 @@ public class lectorArchivo {
     public String tokenizar(FileReader archivos) throws IOException {
         String cadena = "";
         char caract = comparar;
+            // (_)?([a-z]|[A-Z])+(_)?([0-9])*
+
         if (caract == 95 || (caract >= 65 && caract <= 90) || (caract >= 97 && caract <= 122)) {
             cadena += caract;
             caract = leyendo(archivos);
@@ -185,7 +187,7 @@ public class lectorArchivo {
             comparar = caract;
             //System.out.println(comparar);
             return cadena;
-        } else if (caract == 60 || caract == 62 || caract == 33 || caract == 47 || caract == 42 || caract == 43 || caract == 45) {
+        } else if (caract == 60 || caract == 62 || caract == 47 || caract == 42 || caract == 43 || caract == 45) {
             cadena += caract;
             caract = leyendo(archivos);
             if (caract == 61) {
@@ -203,7 +205,16 @@ public class lectorArchivo {
             }
             comparar = caract;
             return cadena;
-        } else if (caract == 124) {
+        }  else if (caract == 33) { //!!
+            cadena += caract;
+            caract = leyendo(archivos);
+            if (caract == 33) {
+                cadena += caract;
+                caract = leyendo(archivos);
+            }
+            comparar = caract;
+            return cadena;
+        }else if (caract == 124) {
             cadena += caract;
             caract = leyendo(archivos);
             if (caract == 124) {
