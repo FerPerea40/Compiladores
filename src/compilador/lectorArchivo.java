@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import static java.lang.System.exit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JFileChooser;
 
 /**
@@ -24,6 +25,7 @@ public class lectorArchivo {
     //En otro método imprimir a pantalla los caracteres que arroja la 
     //clase anterior (Dependiendo de cuantas veces se mande llamar el primer método serían los caracteres que mostraría a pantalla).
     char comparar;
+    HashMap<Integer, String> tabla = new HashMap();
 
     public File leerDatos() throws IOException {
         // ventana para abrir el txt
@@ -49,9 +51,10 @@ public class lectorArchivo {
 
     public char leyendo(FileReader archivos) throws FileNotFoundException, IOException {
         int caract = archivos.read();
-  //      if (caract == -1) {
-     //       exit(0);
-    //    }
+
+        if (caract == -1) {
+            return 0;
+        }
         return (char) caract;
     }
 
@@ -66,90 +69,19 @@ public class lectorArchivo {
         lectorArchivo la = new lectorArchivo();
         FileReader archivos = new FileReader(la.leerDatos());
         la.comparar = la.leyendo(archivos);
-        
-        for(int i=0 ;i<31;i++){
-                String palabra = la.tokenizar(archivos);
-        System.out.println(palabra);
-
-        
+        la.generarTabla();
+        for (int i = 0; i < 18; i++) {
+            String palabra = la.tokenizar(archivos);
+            System.out.println(palabra);
+            System.out.println(la.mensaje(la.validarCadena(palabra)));
+            System.out.println();
         }
-//        String palabra = la.tokenizar(archivos);
-//        String palabra2 = la.tokenizar(archivos);
-//        String palabra3 = la.tokenizar(archivos);
-//        String palabra4 = la.tokenizar(archivos);
-//        String palabra5 = la.tokenizar(archivos);
-//        String palabra6 = la.tokenizar(archivos);
-//        String palabra7 = la.tokenizar(archivos);
-//        String palabra8 = la.tokenizar(archivos);
-//        String palabra9= la.tokenizar(archivos);
-//        String palabra10 = la.tokenizar(archivos);
-//        String palabra11 = la.tokenizar(archivos);
-//        String palabra12 = la.tokenizar(archivos);
-//        String palabra13 = la.tokenizar(archivos);
-//        String palabra14 = la.tokenizar(archivos);
-//        String palabra15 = la.tokenizar(archivos);
-//        String palabra16 = la.tokenizar(archivos);
-//        System.out.println(palabra);
-//        System.out.println(palabra2);
-//        System.out.println(palabra3);
-//        System.out.println(palabra4);
-//        System.out.println(palabra5);
-//        System.out.println(palabra6);
-//        System.out.println(palabra7);
-//        System.out.println(palabra8);   
-//        System.out.println(palabra9);
-//        System.out.println(palabra10);
-//        System.out.println(palabra11);
-//        System.out.println(palabra12);
-//        System.out.println(palabra13);
-//        System.out.println(palabra14);
-//        System.out.println(palabra15);
-//        System.out.println(palabra16);
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//
-//        //AQUI SE PASA DE LOS DATOS DEL ARCHIVO
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-//        System.out.println(la.leyendo(archivos));
-
     }
 
     public String tokenizar(FileReader archivos) throws IOException {
         String cadena = "";
         char caract = comparar;
-            // (_)?([a-z]|[A-Z])+(_)?([0-9])*
+        // (_)?([a-z]|[A-Z])+(_)?([0-9])*
 
         if (caract == 95 || (caract >= 65 && caract <= 90) || (caract >= 97 && caract <= 122)) {
             cadena += caract;
@@ -205,7 +137,7 @@ public class lectorArchivo {
             }
             comparar = caract;
             return cadena;
-        }  else if (caract == 33) { //!!...
+        } else if (caract == 33) { //!!...
             cadena += caract;
             caract = leyendo(archivos);
             if (caract == 33) {
@@ -214,7 +146,7 @@ public class lectorArchivo {
             }
             comparar = caract;
             return cadena;
-        }else if (caract == 124) {
+        } else if (caract == 124) {
             cadena += caract;
             caract = leyendo(archivos);
             if (caract == 124) {
@@ -250,6 +182,31 @@ public class lectorArchivo {
             }
             comparar = caract;
             return cadena;
+        } else if (caract == 34) {
+            cadena += caract;
+            caract = leyendo(archivos);
+            while (caract == 32 || caract == 33 || (caract >= 35 && caract <= 126)) {
+                cadena += caract;
+                caract = leyendo(archivos);
+            }
+            if (caract == 34) {
+                cadena += caract;
+                caract = leyendo(archivos);
+            }
+
+            comparar = caract;
+            //System.out.println(comparar);
+            return cadena;
+        } else if (caract == 32) {
+            caract = leyendo(archivos);
+            comparar = caract;
+            return tokenizar(archivos);
+        } else if (caract == 13) {
+            caract = leyendo(archivos);
+            caract = leyendo(archivos);
+
+            comparar = caract;
+            return tokenizar(archivos);
         } else {
             cadena += caract;
             comparar = leyendo(archivos);
@@ -258,7 +215,69 @@ public class lectorArchivo {
 
     }
 
- 
+    public void generarTabla() {
+        tabla.put(1, "whilesito");
+        tabla.put(2, "ifsito");
+        tabla.put(3, "enterito");
+        tabla.put(4, "flotantito");
+        tabla.put(5, "doublesito");
+        tabla.put(6, "stringsito");
+        tabla.put(7, "charsito");
+        tabla.put(8, "returnsito");
+        tabla.put(9, "mainsito");
+        tabla.put(10, "funcioncita");
+        tabla.put(11, "voidsito");
+        tabla.put(12, ">=");
+        tabla.put(13, "<=");
+        tabla.put(14, ">");
+        tabla.put(15, "<");
+        tabla.put(16, "!!");
+        tabla.put(17, "==");
+        tabla.put(18, "++");
+        tabla.put(19, "--");
+        tabla.put(20, "+");
+        tabla.put(21, "-");
+        tabla.put(22, "/");
+        tabla.put(23, "*");
+        tabla.put(24, "=");
+        tabla.put(25, "&&");
+        tabla.put(26, "oo");
+        tabla.put(27, "CF");
+        tabla.put(28, "constant");
+        tabla.put(29, "then");
+        tabla.put(30, "make");
+        tabla.put(31, "run");
+    }
+
+    public boolean validarCadena(String cadena) {
+        boolean verdad = false;
+        char[] evaluate = new char[cadena.length()];
+        for(int i=0; i<evaluate.length; i++){
+            evaluate[i] = cadena.charAt(i);
+        }
+        if (tabla.containsValue(cadena)) {
+            verdad = true;
+        }else if(cadena.equals(";") || cadena.equals("{") || cadena.equals("}") || cadena.equals("(") || cadena.equals(")") ){
+            verdad = true;
+        }else if(evaluate[0] == 95 || (evaluate[0] >= 65 && evaluate[0] <= 90) || (evaluate[0] >= 97 && evaluate[0] <= 122)){
+            verdad = true;
+        }else if(evaluate[0] >= 48 && evaluate[0] <= 57){
+            verdad = true;
+        }else if(evaluate[0] == 34 && evaluate[cadena.length()-1]==34){
+            verdad = true;
+        }
+        return verdad;
+    }
+
+    public String mensaje(boolean yesno) {
+        String mensajin = "";
+        if (yesno) {
+            mensajin = "Cadena válida";
+        } else {
+            mensajin = "No es un símbolo válido";
+        }
+        return mensajin;
+    }
     // (_)?([a-z]|[A-Z])+(_)?([0-9])*
     // [0-9]+ (/.)* [0-9]*
     //_ -> 95
