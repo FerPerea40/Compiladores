@@ -70,7 +70,9 @@ public class lectorArchivo {
         FileReader archivos = new FileReader(la.leerDatos());
         la.comparar = la.leyendo(archivos);
         la.generarTabla();
-        for (int i = 0; i < 18; i++) {
+        
+      
+       for (int i = 0; i < 63; i++) {
             String palabra = la.tokenizar(archivos);
             System.out.println(palabra);
             System.out.println(la.mensaje(la.validarCadena(palabra)));
@@ -247,6 +249,7 @@ public class lectorArchivo {
         tabla.put(29, "then");
         tabla.put(30, "make");
         tabla.put(31, "run");
+            tabla.put(31, ":");
     }
 
     public boolean validarCadena(String cadena) {
