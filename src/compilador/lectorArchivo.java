@@ -28,7 +28,7 @@ public class lectorArchivo {
     HashMap<Integer, String> tabla = new HashMap();
 
     public File leerDatos() throws IOException {
-        // ventana para abrir el txt
+        // ventana para abrir el txtr
 
         String texto, aux;
         ArrayList<String> lista = new ArrayList();
