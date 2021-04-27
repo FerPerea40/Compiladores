@@ -25,7 +25,7 @@ public class lectorArchivo {
     //En otro método imprimir a pantalla los caracteres que arroja la 
     //clase anterior (Dependiendo de cuantas veces se mande llamar el primer método serían los caracteres que mostraría a pantalla).
     char comparar;
-    HashMap<Integer, String> tabla = new HashMap();
+    static HashMap<Integer, String> tabla = new HashMap();
 
     public File leerDatos() throws IOException {
         // ventana para abrir el txtr
@@ -71,13 +71,17 @@ public class lectorArchivo {
         la.comparar = la.leyendo(archivos);
         la.generarTabla();
         
+        ArrayList<String> palabritas = new ArrayList<>();
       
        for (int i = 0; i < 63; i++) {
             String palabra = la.tokenizar(archivos);
             System.out.println(palabra);
+            palabritas.add(palabra);
             System.out.println(la.mensaje(la.validarCadena(palabra)));
             System.out.println();
         }
+       
+       lexico lex =  new lexico(palabritas);
     }
 
     public String tokenizar(FileReader archivos) throws IOException {
@@ -252,7 +256,7 @@ public class lectorArchivo {
             tabla.put(31, ":");
     }
 
-    public boolean validarCadena(String cadena) {
+    public static boolean validarCadena(String cadena) {
         boolean verdad = false;
         char[] evaluate = new char[cadena.length()];
         for(int i=0; i<evaluate.length; i++){
