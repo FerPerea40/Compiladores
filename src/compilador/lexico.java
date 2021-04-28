@@ -19,8 +19,7 @@ public class lexico {
     public lexico(ArrayList<String> palabritas) {
         this.tokens = palabritas;
     }
-    
-    
+
 //<Programa>::= {<Encabezado><Instrucciones><Pie>}
 //FIRST(Programa) = {“{”}
     public void programa() {
@@ -28,16 +27,16 @@ public class lexico {
             encabezado();
             instrucciones();
             pie();
-            if(tokens.get(tokens.lastIndexOf(pos)).equals("}")){
-               System.out.println("Compilo Correctamente");
-            }else{
-              error(4);
+            if (tokens.get(tokens.lastIndexOf(pos)).equals("}")) {
+                System.out.println("Compilo Correctamente");
+            } else {
+                error(4);
             }
         } else {
             error(1);
         }
-      }
-    
+    }
+
 //<Encabezado>::= CF<Tipo>Ident<Aux21>
 //<Encabezado>::= Constant <Aux5>
 //FIRST(Encabezado) = {“CF”+ “Constant”}
@@ -79,16 +78,42 @@ public class lexico {
                 System.out.println("Error 3:Identificador inválido");
 
                 break;
-             case 4:
+            case 4:
                 System.out.println("Error 4: Se esperaba } al final");
-
+                
+            case 5:
+                System.out.println("Error 5: Se esperaba ; al final");
                 break;
         }
 
     }
 
+    
+//<Aux21>::=  ; <Aux55>
+//<Aux21>::= = <Aux2> ;
+//FIRST(Aux21) = {“;” + “=”} 
+
     private void aux21() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        pos++;
+        switch (tokens.get(pos)) {
+
+            case ";":
+                aux55();
+                break;
+            case "=":
+                aux2();
+                pos++;
+                if (tokens.get(pos).equals(";")) {
+
+                } else {
+                    error(5);
+                }
+
+                break;
+
+        }
+
     }
 
     private void tipo() {
@@ -104,6 +129,14 @@ public class lexico {
     }
 
     private void pie() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void aux55() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void aux2() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
