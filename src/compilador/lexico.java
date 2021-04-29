@@ -82,7 +82,7 @@ public class lexico {
                 System.out.println("Error 4: Se esperaba } al final");
                 break;
             case 5:
-                System.out.println("Error 5: Se esperaba ; al final");
+                System.out.println("Error 5: Se esperaba ;");
                 break;
             case 6:
                 System.out.println("Error 6: Tipo de dato inválido");
@@ -119,6 +119,27 @@ public class lexico {
                 break;
             case 17:
                 System.out.println("Error 17: Operador lógico inválido");
+                break;
+            case 18:
+                System.out.println("Error 18: Se esperaban :");
+                break;  
+            case 19:
+                System.out.println("Error 19: Se esperaban returnsito al final");
+                break;
+            case 20:
+                System.out.println("Error 20: Función mal declarada");
+                break;
+            case 21:
+                System.out.println("Error 21: Error en tu condición");
+                break;
+            case 22:
+                System.out.println("Error 22: Error en el pie");
+                break;
+            case 23:
+                System.out.println("Error 22: Operación invalida");
+                break;
+            case 24:
+                System.out.println("Error 14: Se esperaba un : o una ,");
                 break;
         }
 
@@ -289,13 +310,59 @@ public class lexico {
                 break;
         }
     }
+    
+//<Pie>::= <Aux1>Ident : <Instrucciones> returnsito <Aux2><Aux3>
+//<Pie>::= voidsito Ident : <Instrucciones><Aux3>
+//FIRST(Pie) = {FIRST(Aux1) + “voidsito”} = {“funcioncita” + “mainsito” + “voidsito”}
 
     private void pie() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        pos++;
+        if(tokens.get(pos).equals("voidsito")){
+            pos++;
+            if(lectorArchivo.validarCadena(tokens.get(pos))){
+                pos++;
+                if(tokens.get(pos).equals(":")){
+                    instrucciones();
+                    aux3();
+                }else{
+                    error(18);
+                }
+            }else{
+                error(3);
+            }
+        }else if(tokens.get(pos).equals("funcioncita") || tokens.get(pos).equals("mainsito")){
+            pos--;
+            aux1();
+            pos++;
+            if(lectorArchivo.validarCadena(tokens.get(pos))){
+                pos++;
+                if(tokens.get(pos).equals(":")){
+                    instrucciones();
+                    pos++;
+                    if(tokens.get(pos).equals("returnsito")){
+                        aux2();
+                        aux3();    
+                    }else{
+                        error(19);
+                    }                   
+                }else{
+                    error(18);
+                }
+            }else{
+                error(3);
+            }
+        }else{
+            error(22);
+        }
     }
 
+//<Aux55>::= ε 
+//<Aux55>::= <Encabezado>
+//FIRST(Aux55)= { “ε” + FIRST(Encabezado}= {“ε” + “CF” + “Constant”}
+//FOLLOWS(Aux55)= {FOLLOWS(Aux21)+FOLLOWS(Aux4)} =  {“ifsito” + “whilesito” + “Run” + “Ident”} 
+
     private void aux55() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        encabezado();
     }
 
 //<Aux2>::= Num
@@ -359,8 +426,21 @@ public class lexico {
         }
     }
 
+//<Aux9>::= <Aux2> <Operadores> 
+//<Aux9>::= ;
+//FIRST(Aux9) = {FIRST(Aux2) + “;”} = {“Num” + “Ident” + “;”}
+
     private void aux9() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        pos++;
+        if(lectorArchivo.validarCadena(tokens.get(pos))){
+            pos--;
+            aux2();
+            Operadores();
+        }else if(tokens.get(pos).equals(";")){
+            
+        }else{
+            error(23);
+        }
     }
     
 //<Condición>::= <Aux2> <Comparadores> <Aux2> <Aux10>
@@ -373,16 +453,73 @@ public class lexico {
         aux10();
     }
 
+//<Aux8>::= <Instrucciones>;
+//<Aux8>::= ε
+//FIRST(Aux8) = {FIRST(Instrucciones) + “ε”} = {“ifsito” + “whilesito” + “Run” + “Ident” + “ε”}
+//FOLLOW(Aux8) = {FOLLOW(Instrucciones)} = {“funcioncita” + “mainsito” + “voidsito” + “returnsito” + “;”}
+
     private void aux8() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        instrucciones();
     }
+
+//<AuxSino>::= else then <Instrucciones>;
+//<AuxSino>::= elsif (<Condición>)then<Instrucciones>;
+//<AuxSino>::= ε
+//FIRST(AuxSino) = {“else” + “elsif” + “ε”}
+//FOLLOW(AuxSino) = {FOLLOW(Instrucciones)} = {“funcioncita” + “mainsito” + “voidsito” + “returnsito” + “;”}
 
     private void auxSino() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        pos++;
+        switch(tokens.get(pos)){
+            case "else":
+                break;
+            case "elsif":
+                break;
+            default:
+                error(21);
+                break;
+        }
     }
 
+//<Aux4>::= : <Tipo> := <Aux2> ; <Aux55>
+//<Aux4>::=  , Ident <Aux5>
+//FIRST(Aux4) = {“:” + “,”} 
+
     private void aux4() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        pos++;
+        switch(tokens.get(pos)){
+            case ":":
+                tipo();
+                pos++;
+                if(tokens.get(pos).equals(":")){
+                    pos++;
+                    if(tokens.get(pos).equals("=")){
+                        aux2();
+                        pos++;
+                        if(tokens.get(pos).equals(";")){
+                            aux55();
+                        }else{
+                            error(5);
+                        }
+                    }else{
+                        error(8);
+                    }
+                }else{
+                    error(18);
+                }
+                break;
+            case ",":
+                pos++;
+                if(lectorArchivo.validarCadena(tokens.get(pos))){
+                    aux5();
+                }else{
+                    error(3);
+                }
+                break;
+            default:
+                error(24);
+                break;
+        }
     }
     
 //<Comparadores>::= ==
@@ -446,6 +583,33 @@ public class lexico {
                 break;
             default:
                 error(17);
+                break;
+        }
+    }
+    
+//<Aux3>::= <Pie>
+//<Aux3>::= ε
+//FIRST(Aux3) = {FIRST(Pie) +  “ε”} = {“funcioncita” + “mainsito” + “voidsito” +  “ε”}
+//FOLLOWS(Aux3) ={FOLLOWS(Pie) }={“}”}
+
+    private void aux3() {
+        pie();
+    }
+    
+//<Aux1>::= funcioncita
+//<Aux1>::= mainsito
+//FIRST(Aux1) = {“funcioncita” + “mainsito”}
+
+    private void aux1() {
+        pos++;
+        switch(tokens.get(pos)){
+            case "funcioncita":
+                break;
+            case "mainsito":
+                break;
+                
+            default:
+                error(20);
                 break;
         }
     }
