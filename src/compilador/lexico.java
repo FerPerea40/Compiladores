@@ -122,7 +122,7 @@ public class lexico {
                 break;
             case 18:
                 System.out.println("Error 18: Se esperaban :");
-                break;  
+                break;
             case 19:
                 System.out.println("Error 19: Se esperaban returnsito al final");
                 break;
@@ -310,48 +310,47 @@ public class lexico {
                 break;
         }
     }
-    
+
 //<Pie>::= <Aux1>Ident : <Instrucciones> returnsito <Aux2><Aux3>
 //<Pie>::= voidsito Ident : <Instrucciones><Aux3>
 //FIRST(Pie) = {FIRST(Aux1) + “voidsito”} = {“funcioncita” + “mainsito” + “voidsito”}
-
     private void pie() {
         pos++;
-        if(tokens.get(pos).equals("voidsito")){
+        if (tokens.get(pos).equals("voidsito")) {
             pos++;
-            if(lectorArchivo.validarCadena(tokens.get(pos))){
+            if (lectorArchivo.validarCadena(tokens.get(pos))) {
                 pos++;
-                if(tokens.get(pos).equals(":")){
+                if (tokens.get(pos).equals(":")) {
                     instrucciones();
                     aux3();
-                }else{
+                } else {
                     error(18);
                 }
-            }else{
+            } else {
                 error(3);
             }
-        }else if(tokens.get(pos).equals("funcioncita") || tokens.get(pos).equals("mainsito")){
+        } else if (tokens.get(pos).equals("funcioncita") || tokens.get(pos).equals("mainsito")) {
             pos--;
             aux1();
             pos++;
-            if(lectorArchivo.validarCadena(tokens.get(pos))){
+            if (lectorArchivo.validarCadena(tokens.get(pos))) {
                 pos++;
-                if(tokens.get(pos).equals(":")){
+                if (tokens.get(pos).equals(":")) {
                     instrucciones();
                     pos++;
-                    if(tokens.get(pos).equals("returnsito")){
+                    if (tokens.get(pos).equals("returnsito")) {
                         aux2();
-                        aux3();    
-                    }else{
+                        aux3();
+                    } else {
                         error(19);
-                    }                   
-                }else{
+                    }
+                } else {
                     error(18);
                 }
-            }else{
+            } else {
                 error(3);
             }
-        }else{
+        } else {
             error(22);
         }
     }
@@ -360,9 +359,18 @@ public class lexico {
 //<Aux55>::= <Encabezado>
 //FIRST(Aux55)= { “ε” + FIRST(Encabezado}= {“ε” + “CF” + “Constant”}
 //FOLLOWS(Aux55)= {FOLLOWS(Aux21)+FOLLOWS(Aux4)} =  {“ifsito” + “whilesito” + “Run” + “Ident”} 
-
     private void aux55() {
-        encabezado();
+        pos++;//TALVEZ!!!
+        if (!tokens.get(pos).equals("ifsito")
+                && !tokens.get(pos).equals("whilesito")
+                && !tokens.get(pos).equals("Run")
+                && !tokens.get(pos).equals("Ident")) {
+            pos--;
+            encabezado();
+        } else {
+            pos--;
+        }
+
     }
 
 //<Aux2>::= Num
@@ -429,23 +437,21 @@ public class lexico {
 //<Aux9>::= <Aux2> <Operadores> 
 //<Aux9>::= ;
 //FIRST(Aux9) = {FIRST(Aux2) + “;”} = {“Num” + “Ident” + “;”}
-
     private void aux9() {
         pos++;
-        if(lectorArchivo.validarCadena(tokens.get(pos))){
+        if (lectorArchivo.validarCadena(tokens.get(pos))) {
             pos--;
             aux2();
             Operadores();
-        }else if(tokens.get(pos).equals(";")){
-            
-        }else{
+        } else if (tokens.get(pos).equals(";")) {
+
+        } else {
             error(23);
         }
     }
-    
+
 //<Condición>::= <Aux2> <Comparadores> <Aux2> <Aux10>
 //FIRST(Condición) = FIRST(Aux2) = {“Num” + “Ident} 
-
     private void Condicion() {
         aux2();
         comparadores();
@@ -457,9 +463,19 @@ public class lexico {
 //<Aux8>::= ε
 //FIRST(Aux8) = {FIRST(Instrucciones) + “ε”} = {“ifsito” + “whilesito” + “Run” + “Ident” + “ε”}
 //FOLLOW(Aux8) = {FOLLOW(Instrucciones)} = {“funcioncita” + “mainsito” + “voidsito” + “returnsito” + “;”}
-
     private void aux8() {
+        pos++;
+        if (!tokens.get(pos).equals("funcioncita")
+                && !tokens.get(pos).equals("mainsito")
+                && !tokens.get(pos).equals("voidsito")
+                && !tokens.get(pos).equals("returnsito")
+                && !tokens.get(pos).equals(";")) {
+            pos--;
         instrucciones();
+        }else{
+         pos--;       
+                
+               }
     }
 
 //<AuxSino>::= else then <Instrucciones>;
@@ -467,52 +483,59 @@ public class lexico {
 //<AuxSino>::= ε
 //FIRST(AuxSino) = {“else” + “elsif” + “ε”}
 //FOLLOW(AuxSino) = {FOLLOW(Instrucciones)} = {“funcioncita” + “mainsito” + “voidsito” + “returnsito” + “;”}
-
     private void auxSino() {
         pos++;
-        switch(tokens.get(pos)){
-            case "else":
-                break;
-            case "elsif":
-                break;
-            default:
-                error(21);
-                break;
+        if (!tokens.get(pos).equals("funcioncita")
+                && !tokens.get(pos).equals("mainsito")
+                && !tokens.get(pos).equals("voidsito")
+                && !tokens.get(pos).equals("returnsito")
+                && !tokens.get(pos).equals(";")) {
+            pos--;
+            switch (tokens.get(pos)) {
+                case "else":
+                    break;
+                case "elsif":
+                    break;
+                default:
+                    error(21);
+                    break;
+            }
+        } else {
+            pos--;
         }
     }
 
 //<Aux4>::= : <Tipo> := <Aux2> ; <Aux55>
 //<Aux4>::=  , Ident <Aux5>
 //FIRST(Aux4) = {“:” + “,”} 
-
     private void aux4() {
         pos++;
-        switch(tokens.get(pos)){
+        switch (tokens.get(pos)) {
             case ":":
                 tipo();
                 pos++;
-                if(tokens.get(pos).equals(":")){
+                if (tokens.get(pos).equals(":")) {
                     pos++;
-                    if(tokens.get(pos).equals("=")){
+                    if (tokens.get(pos).equals("=")) {
                         aux2();
                         pos++;
-                        if(tokens.get(pos).equals(";")){
+                        if (tokens.get(pos).equals(";")) {
                             aux55();
-                        }else{
+                        } else {
                             error(5);
                         }
-                    }else{
+                    } else {
                         error(8);
                     }
-                }else{
+                } else {
                     error(18);
                 }
                 break;
             case ",":
                 pos++;
-                if(lectorArchivo.validarCadena(tokens.get(pos))){
+                if (lectorArchivo.validarCadena(tokens.get(pos))) {
                     aux5();
-                }else{
+                } else {
                     error(3);
                 }
                 break;
@@ -521,7 +544,7 @@ public class lexico {
                 break;
         }
     }
-    
+
 //<Comparadores>::= ==
 //<Comparadores>::= !!
 //<Comparadores>::= <
@@ -529,7 +552,6 @@ public class lexico {
 //<Comparadores>::= >=
 //<Comparadores>::= >
 //FIRST(Comparadores) = {“==” + “!!” + “<” + “<=” + “>=” + “>”}
-
     public void comparadores() {
         pos++;
         switch (tokens.get(pos)) {
@@ -560,54 +582,65 @@ public class lexico {
 //<Aux10>::= <Aux11> <Aux2> <Comparadores> <Aux2> 
 //<Aux10>::= ε
 //FIRST(Aux10) = {FIRST(Aux11) + “ε”} = {“&&” + “oo” + “ε”} 
-
+//FOLLOW(Aux10) = {FOLLOW(Condicion)} = {“)”}
+//FOLLOW(Condicion)={“)”}
     private void aux10() {
-        aux11();
-        aux2();
-        comparadores();
-        aux2();
+        pos++; //TALVEZ!!!!!
+        if (!tokens.get(pos).equals(")")) {
+            pos--;
+            aux11();
+            aux2();
+            comparadores();
+            aux2();
+        } else {
+            pos--;
+        }
     }
-    
+
 //<Aux11>::= && 
 //<Aux11>::= oo
 //FIRST(Aux11) = {“&&” + “oo”}
-
     private void aux11() {
         pos++;
-        switch(tokens.get(pos)){
+        switch (tokens.get(pos)) {
             case "&&":
-                
+
                 break;
             case "oo":
-                
+
                 break;
             default:
                 error(17);
                 break;
         }
     }
-    
+
 //<Aux3>::= <Pie>
 //<Aux3>::= ε
 //FIRST(Aux3) = {FIRST(Pie) +  “ε”} = {“funcioncita” + “mainsito” + “voidsito” +  “ε”}
 //FOLLOWS(Aux3) ={FOLLOWS(Pie) }={“}”}
-
     private void aux3() {
-        pie();
+        pos++;
+        if (!tokens.get(pos).equals("}")) {
+            pos--;
+            pie();
+        } else {
+            pos--;
+
+        }
     }
-    
+
 //<Aux1>::= funcioncita
 //<Aux1>::= mainsito
 //FIRST(Aux1) = {“funcioncita” + “mainsito”}
-
     private void aux1() {
         pos++;
-        switch(tokens.get(pos)){
+        switch (tokens.get(pos)) {
             case "funcioncita":
                 break;
             case "mainsito":
                 break;
-                
+
             default:
                 error(20);
                 break;
