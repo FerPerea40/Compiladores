@@ -490,7 +490,6 @@ public class lexico {
                 && !tokens.get(pos).equals("voidsito")
                 && !tokens.get(pos).equals("returnsito")
                 && !tokens.get(pos).equals(";")) {
-            pos--;
             switch (tokens.get(pos)) {
                 case "else":
                     break;
