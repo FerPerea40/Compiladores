@@ -5,6 +5,8 @@
  */
 package compilador;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -25,9 +27,9 @@ public class lexico {
     public void programa() {
         if (tokens.get(pos).equals("{")) {
             encabezado();
-            instrucciones();
             pie();
-            if (tokens.get(tokens.lastIndexOf(pos)).equals("}")) {
+
+            if (tokens.get((tokens.size() - 1)).equals("}")) {
                 System.out.println("Compilo Correctamente");
             } else {
                 error(4);
@@ -43,11 +45,10 @@ public class lexico {
     public void encabezado() {
         pos++;
         switch (tokens.get(pos)) {
-
             case "CF":
                 tipo();
                 pos++;
-                if (lectorArchivo.validarCadena(tokens.get(pos))) {
+                if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
                     aux21();
                 } else {
                     error(3);
@@ -57,22 +58,26 @@ public class lexico {
                 aux5();
                 break;
             default:
-                error(2);
+                if (!tokens.get(pos).equals("CF") && !tokens.get(pos).equals("Constant")) {
+                    pos--;
+                } else {
+                    error(2);
+                }
                 break;
 
         }
     }
 
     public void error(int i) {
+        System.out.println("Pos:" + pos + " --> " + tokens.get(pos));
 
         switch (i) {
-
             case 1:
                 System.out.println("Error 1 : Se espera una { al inicio");
+                // System.exit(0);
                 break;
             case 2:
                 System.out.println("Error 2: Se espera CF o Constant ");
-
                 break;
             case 3:
                 System.out.println("Error 3:Identificador inválido");
@@ -92,6 +97,8 @@ public class lexico {
                 break;
             case 8:
                 System.out.println("Error 8: Se esperaba un =");
+                //               System.exit(0);
+
                 break;
             case 9:
                 System.out.println("Error 9: Se esperaba un ( al inicio");
@@ -134,6 +141,8 @@ public class lexico {
                 break;
             case 22:
                 System.out.println("Error 22: Error en el pie");
+                //          System.exit(0);
+
                 break;
             case 23:
                 System.out.println("Error 22: Operación invalida");
@@ -149,18 +158,17 @@ public class lexico {
 //<Aux21>::= = <Aux2> ;
 //FIRST(Aux21) = {“;” + “=”} 
     private void aux21() {
-
         pos++;
         switch (tokens.get(pos)) {
-
             case ";":
+                System.out.println("Si entre al aux21");
                 aux55();
                 break;
             case "=":
                 aux2();
                 pos++;
                 if (tokens.get(pos).equals(";")) {
-
+                    encabezado();
                 } else {
                     error(5);
                 }
@@ -207,7 +215,7 @@ public class lexico {
 //    FIRST(Aux5)= Ident
     private void aux5() {
         pos++;
-        if (lectorArchivo.validarCadena(tokens.get(pos))) {
+        if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
             aux7();
         } else {
             error(3);
@@ -280,7 +288,7 @@ public class lexico {
                 pos++;
                 if (tokens.get(pos).equals("(")) {
                     pos++;
-                    if (lectorArchivo.validarCadena(tokens.get(pos))) {
+                    if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
                         pos++;
                         if (tokens.get(pos).equals(")")) {
 
@@ -295,7 +303,7 @@ public class lexico {
                 }
                 break;
             default:
-                if (lectorArchivo.validarCadena(tokens.get(pos))) {
+                if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
                     pos++;
                     if (tokens.get(pos).equals("=")) {
                         aux2();
@@ -318,7 +326,7 @@ public class lexico {
         pos++;
         if (tokens.get(pos).equals("voidsito")) {
             pos++;
-            if (lectorArchivo.validarCadena(tokens.get(pos))) {
+            if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
                 pos++;
                 if (tokens.get(pos).equals(":")) {
                     instrucciones();
@@ -333,7 +341,7 @@ public class lexico {
             pos--;
             aux1();
             pos++;
-            if (lectorArchivo.validarCadena(tokens.get(pos))) {
+            if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
                 pos++;
                 if (tokens.get(pos).equals(":")) {
                     instrucciones();
@@ -361,11 +369,15 @@ public class lexico {
 //FOLLOWS(Aux55)= {FOLLOWS(Aux21)+FOLLOWS(Aux4)} =  {“ifsito” + “whilesito” + “Run” + “Ident”} 
     private void aux55() {
         pos++;//TALVEZ!!!
+        System.out.println("antes del if " + !lectorArchivo.validarIdentNum(tokens.get(pos)));
+
         if (!tokens.get(pos).equals("ifsito")
                 && !tokens.get(pos).equals("whilesito")
                 && !tokens.get(pos).equals("Run")
-                && !tokens.get(pos).equals("Ident")) {
+                && !lectorArchivo.validarIdentNum(tokens.get(pos))) {
             pos--;
+
+            System.out.println("SI me meti putos  --- " + lectorArchivo.validarIdentNum(tokens.get(pos)));
             encabezado();
         } else {
             pos--;
@@ -378,7 +390,7 @@ public class lexico {
 //FIRST(Aux2) = {“Num”+”Ident”}
     private void aux2() {
         pos++;
-        if (lectorArchivo.validarCadena(tokens.get(pos))) {
+        if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
 
         } else {
             error(13);
@@ -396,7 +408,7 @@ public class lexico {
                 break;
             case ",":
                 pos++;
-                if (lectorArchivo.validarCadena(tokens.get(pos))) {
+                if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
                     aux5();
                 } else {
                     error(3);
@@ -415,6 +427,7 @@ public class lexico {
 //FIRST(Operadores) = {“+” + “-” + “*” + “/”}
     private void Operadores() {
         pos++;
+        System.out.println("Voy en" + tokens.get(pos));
         switch (tokens.get(pos)) {
             case "+":
 
@@ -428,8 +441,18 @@ public class lexico {
             case "/":
 
                 break;
+            case "++":
+
+                break;
+            case "--":
+
+                break;
             default:
+                if(tokens.get(pos).equals(";")){
+                
+                }else{
                 error(15);
+                }
                 break;
         }
     }
@@ -439,12 +462,15 @@ public class lexico {
 //FIRST(Aux9) = {FIRST(Aux2) + “;”} = {“Num” + “Ident” + “;”}
     private void aux9() {
         pos++;
-        if (lectorArchivo.validarCadena(tokens.get(pos))) {
+        if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
             pos--;
             aux2();
             Operadores();
+            aux2();
+            aux9();
+            
         } else if (tokens.get(pos).equals(";")) {
-
+                instrucciones();
         } else {
             error(23);
         }
@@ -471,11 +497,11 @@ public class lexico {
                 && !tokens.get(pos).equals("returnsito")
                 && !tokens.get(pos).equals(";")) {
             pos--;
-        instrucciones();
-        }else{
-         pos--;       
-                
-               }
+            instrucciones();
+        } else {
+            pos--;
+
+        }
     }
 
 //<AuxSino>::= else then <Instrucciones>;
@@ -532,7 +558,7 @@ public class lexico {
                 break;
             case ",":
                 pos++;
-                if (lectorArchivo.validarCadena(tokens.get(pos))) {
+                if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
                     aux5();
                 } else {
                     error(3);
@@ -591,6 +617,7 @@ public class lexico {
             aux2();
             comparadores();
             aux2();
+            aux10();
         } else {
             pos--;
         }
@@ -644,5 +671,37 @@ public class lexico {
                 error(20);
                 break;
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        int fers;
+        int carliwis;
+        char caracterprincipal;
+        lectorArchivo la = new lectorArchivo();
+        FileReader archivos = new FileReader(la.leerDatos());
+        la.comparar = la.leyendo(archivos);
+        la.generarTabla();
+
+        ArrayList<String> palabritas = new ArrayList<>();
+        String palabra = la.tokenizar(archivos);
+        System.out.println(palabra);
+        palabritas.add(palabra);
+        System.out.println(la.mensaje(la.validarCadena(palabra)));
+        System.out.println();
+        while (la.mensaje(la.validarCadena(palabra)).equals("Cadena válida")) {
+            palabra = la.tokenizar(archivos);
+            if (!la.mensaje(la.validarCadena(palabra)).equals("Cadena válida")) {
+
+            } else {
+                System.out.println(palabra);
+                palabritas.add(palabra);
+                System.out.println(la.mensaje(la.validarCadena(palabra)));
+                System.out.println();
+            }
+        }
+
+        lexico lex = new lexico(palabritas);
+
+        lex.programa();
     }
 }

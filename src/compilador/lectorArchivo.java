@@ -62,27 +62,7 @@ public class lectorArchivo {
         System.out.println(caracter);
     }
 
-    public static void main(String[] args) throws IOException {
-        int fers;
-        int carliwis;
-        char caracterprincipal;
-        lectorArchivo la = new lectorArchivo();
-        FileReader archivos = new FileReader(la.leerDatos());
-        la.comparar = la.leyendo(archivos);
-        la.generarTabla();
-        
-        ArrayList<String> palabritas = new ArrayList<>();
-      
-       for (int i = 0; i < 63; i++) {
-            String palabra = la.tokenizar(archivos);
-            System.out.println(palabra);
-            palabritas.add(palabra);
-            System.out.println(la.mensaje(la.validarCadena(palabra)));
-            System.out.println();
-        }
-       
-       lexico lex =  new lexico(palabritas);
-    }
+
 
     public String tokenizar(FileReader archivos) throws IOException {
         String cadena = "";
@@ -224,11 +204,11 @@ public class lectorArchivo {
     public void generarTabla() {
         tabla.put(1, "whilesito");
         tabla.put(2, "ifsito");
-        tabla.put(3, "enterito");
-        tabla.put(4, "flotantito");
-        tabla.put(5, "doublesito");
-        tabla.put(6, "stringsito");
-        tabla.put(7, "charsito");
+        tabla.put(3, "Enterito");
+        tabla.put(4, "Flotantito");
+        tabla.put(5, "Doublesito");
+        tabla.put(6, "Stringsito");
+        tabla.put(7, "Charsito");
         tabla.put(8, "returnsito");
         tabla.put(9, "mainsito");
         tabla.put(10, "funcioncita");
@@ -237,7 +217,7 @@ public class lectorArchivo {
         tabla.put(13, "<=");
         tabla.put(14, ">");
         tabla.put(15, "<");
-        tabla.put(16, "!!");
+        tabla.put(16, "!!");//Diferente
         tabla.put(17, "==");
         tabla.put(18, "++");
         tabla.put(19, "--");
@@ -247,13 +227,17 @@ public class lectorArchivo {
         tabla.put(23, "*");
         tabla.put(24, "=");
         tabla.put(25, "&&");
-        tabla.put(26, "oo");
+        tabla.put(26, "oo");//or
         tabla.put(27, "CF");
         tabla.put(28, "constant");
         tabla.put(29, "then");
         tabla.put(30, "make");
-        tabla.put(31, "run");
-            tabla.put(31, ":");
+        tabla.put(31, "Run");
+            tabla.put(32, ":");
+                        tabla.put(33, ",");
+                        tabla.put(34,"else");
+                        tabla.put(35,"elsif");
+
     }
 
     public static boolean validarCadena(String cadena) {
@@ -275,6 +259,25 @@ public class lectorArchivo {
         }
         return verdad;
     }
+    
+    public static boolean validarIdentNum(String cadena){
+     boolean verdad = false;
+        char[] evaluate = new char[cadena.length()];
+        for(int i=0; i<evaluate.length; i++){
+            evaluate[i] = cadena.charAt(i);
+        }
+        if (tabla.containsValue(cadena)) {
+            verdad = false;
+        }else if(evaluate[0] == 95 || (evaluate[0] >= 65 && evaluate[0] <= 90) || (evaluate[0] >= 97 && evaluate[0] <= 122)){
+            verdad = true;
+        }else if(evaluate[0] >= 48 && evaluate[0] <= 57){
+            verdad = true;
+        }else if(evaluate[0] == 34 && evaluate[cadena.length()-1]==34){
+            verdad = true;
+        }
+        return verdad;
+    
+    }
 
     public String mensaje(boolean yesno) {
         String mensajin = "";
@@ -292,4 +295,43 @@ public class lectorArchivo {
     //a -z -> 97 - 122
     //0-9 -> 48 - 57
     //. -> 46
+    
+        public static void main(String[] args) throws IOException {
+        int fers;
+        int carliwis;
+        char caracterprincipal;
+        lectorArchivo la = new lectorArchivo();
+        FileReader archivos = new FileReader(la.leerDatos());
+        la.comparar = la.leyendo(archivos);
+        la.generarTabla();
+        
+        ArrayList<String> palabritas = new ArrayList<>();
+      String palabra = la.tokenizar(archivos);
+       System.out.println(palabra);
+            palabritas.add(palabra);
+            System.out.println(la.mensaje(la.validarCadena(palabra)));
+            System.out.println();
+       while(la.mensaje(la.validarCadena(palabra)).equals("Cadena válida")) {
+            palabra = la.tokenizar(archivos);
+            if(!la.mensaje(la.validarCadena(palabra)).equals("Cadena válida")){
+            
+            }else{
+            System.out.println(palabra);
+            palabritas.add(palabra);
+            System.out.println(la.mensaje(la.validarCadena(palabra)));
+            System.out.println();
+            }
+        }
+       
+       lexico lex =  new lexico(palabritas);
+       
+       lex.programa();
+    }
+    
+    
+    
+    
+    
+    
+    
 }
