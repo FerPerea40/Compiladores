@@ -62,8 +62,6 @@ public class lectorArchivo {
         System.out.println(caracter);
     }
 
-
-
     public String tokenizar(FileReader archivos) throws IOException {
         String cadena = "";
         char caract = comparar;
@@ -233,50 +231,50 @@ public class lectorArchivo {
         tabla.put(29, "then");
         tabla.put(30, "make");
         tabla.put(31, "Run");
-            tabla.put(32, ":");
-                        tabla.put(33, ",");
-                        tabla.put(34,"else");
-                        tabla.put(35,"elsif");
+        tabla.put(32, ":");
+        tabla.put(33, ",");
+        tabla.put(34, "else");
+        tabla.put(35, "elsif");
 
     }
 
     public static boolean validarCadena(String cadena) {
         boolean verdad = false;
         char[] evaluate = new char[cadena.length()];
-        for(int i=0; i<evaluate.length; i++){
+        for (int i = 0; i < evaluate.length; i++) {
             evaluate[i] = cadena.charAt(i);
         }
         if (tabla.containsValue(cadena)) {
             verdad = true;
-        }else if(cadena.equals(";") || cadena.equals("{") || cadena.equals("}") || cadena.equals("(") || cadena.equals(")") ){
+        } else if (cadena.equals(";") || cadena.equals("{") || cadena.equals("}") || cadena.equals("(") || cadena.equals(")")) {
             verdad = true;
-        }else if(evaluate[0] == 95 || (evaluate[0] >= 65 && evaluate[0] <= 90) || (evaluate[0] >= 97 && evaluate[0] <= 122)){
+        } else if (evaluate[0] == 95 || (evaluate[0] >= 65 && evaluate[0] <= 90) || (evaluate[0] >= 97 && evaluate[0] <= 122)) {
             verdad = true;
-        }else if(evaluate[0] >= 48 && evaluate[0] <= 57){
+        } else if (evaluate[0] >= 48 && evaluate[0] <= 57) {
             verdad = true;
-        }else if(evaluate[0] == 34 && evaluate[cadena.length()-1]==34){
+        } else if (evaluate[0] == 34 && evaluate[cadena.length() - 1] == 34) {
             verdad = true;
         }
         return verdad;
     }
-    
-    public static boolean validarIdentNum(String cadena){
-     boolean verdad = false;
+
+    public static boolean validarIdentNum(String cadena) {
+        boolean verdad = false;
         char[] evaluate = new char[cadena.length()];
-        for(int i=0; i<evaluate.length; i++){
+        for (int i = 0; i < evaluate.length; i++) {
             evaluate[i] = cadena.charAt(i);
         }
         if (tabla.containsValue(cadena)) {
             verdad = false;
-        }else if(evaluate[0] == 95 || (evaluate[0] >= 65 && evaluate[0] <= 90) || (evaluate[0] >= 97 && evaluate[0] <= 122)){
+        } else if (evaluate[0] == 95 || (evaluate[0] >= 65 && evaluate[0] <= 90) || (evaluate[0] >= 97 && evaluate[0] <= 122)) {
             verdad = true;
-        }else if(evaluate[0] >= 48 && evaluate[0] <= 57){
+        } else if (evaluate[0] >= 48 && evaluate[0] <= 57) {
             verdad = true;
-        }else if(evaluate[0] == 34 && evaluate[cadena.length()-1]==34){
+        } else if (evaluate[0] == 34 && evaluate[cadena.length() - 1] == 34) {
             verdad = true;
         }
         return verdad;
-    
+
     }
 
     public String mensaje(boolean yesno) {
@@ -295,8 +293,8 @@ public class lectorArchivo {
     //a -z -> 97 - 122
     //0-9 -> 48 - 57
     //. -> 46
-    
-        public static void main(String[] args) throws IOException {
+
+    public static void main(String[] args) throws IOException {
         int fers;
         int carliwis;
         char caracterprincipal;
@@ -304,34 +302,28 @@ public class lectorArchivo {
         FileReader archivos = new FileReader(la.leerDatos());
         la.comparar = la.leyendo(archivos);
         la.generarTabla();
-        
+
         ArrayList<String> palabritas = new ArrayList<>();
-      String palabra = la.tokenizar(archivos);
-       System.out.println(palabra);
-            palabritas.add(palabra);
-            System.out.println(la.mensaje(la.validarCadena(palabra)));
-            System.out.println();
-       while(la.mensaje(la.validarCadena(palabra)).equals("Cadena válida")) {
+        String palabra = la.tokenizar(archivos);
+        System.out.println(palabra);
+        palabritas.add(palabra);
+        System.out.println(la.mensaje(la.validarCadena(palabra)));
+        System.out.println();
+        while (la.mensaje(la.validarCadena(palabra)).equals("Cadena válida")) {
             palabra = la.tokenizar(archivos);
-            if(!la.mensaje(la.validarCadena(palabra)).equals("Cadena válida")){
-            
-            }else{
-            System.out.println(palabra);
-            palabritas.add(palabra);
-            System.out.println(la.mensaje(la.validarCadena(palabra)));
-            System.out.println();
+            if (!la.mensaje(la.validarCadena(palabra)).equals("Cadena válida")) {
+
+            } else {
+                System.out.println(palabra);
+                palabritas.add(palabra);
+                System.out.println(la.mensaje(la.validarCadena(palabra)));
+                System.out.println();
             }
         }
-       
-       lexico lex =  new lexico(palabritas);
-       
-       lex.programa();
+
+        lexico lex = new lexico(palabritas);
+
+        lex.programa();
     }
-    
-    
-    
-    
-    
-    
-    
+
 }

@@ -28,8 +28,8 @@ public class lexico {
         if (tokens.get(pos).equals("{")) {
             encabezado();
             pie();
-
-            if (tokens.get((tokens.size() - 1)).equals("}")) {
+            System.out.println("Si pas ele pie del programa");
+            if (tokens.get(tokens.size()-1).equals("}")) {
                 System.out.println("Compilo Correctamente");
             } else {
                 error(4);
@@ -69,8 +69,8 @@ public class lexico {
     }
 
     public void error(int i) {
-        System.out.println("Pos:" + pos + " --> " + tokens.get(pos));
 
+        System.out.println("Pos:" + pos + " --> " + tokens.get(pos));
         switch (i) {
             case 1:
                 System.out.println("Error 1 : Se espera una { al inicio");
@@ -98,7 +98,6 @@ public class lexico {
             case 8:
                 System.out.println("Error 8: Se esperaba un =");
                 //               System.exit(0);
-
                 break;
             case 9:
                 System.out.println("Error 9: Se esperaba un ( al inicio");
@@ -145,10 +144,13 @@ public class lexico {
 
                 break;
             case 23:
-                System.out.println("Error 22: Operación invalida");
+                System.out.println("Error 23: Operación invalida");
                 break;
             case 24:
-                System.out.println("Error 14: Se esperaba un : o una ,");
+                System.out.println("Error 24: Se esperaba un : o una ,");
+                break;
+             case 25:
+                System.out.println("Error 25: Se esperaba un 0 en returnsito");
                 break;
         }
 
@@ -244,6 +246,7 @@ public class lexico {
                             pos++;
                             if (tokens.get(pos).equals(";")) {
                                 auxSino();
+                                instrucciones();
                             } else {
                                 error(5);
                             }
@@ -270,6 +273,7 @@ public class lexico {
                             pos++;
                             if (tokens.get(pos).equals(";")) {
                                 aux8();
+
                             } else {
                                 error(5);
                             }
@@ -285,13 +289,14 @@ public class lexico {
                 }
                 break;
             case "Run":
+                System.out.println("Entre al caso RUN perritos con :" + tokens.get(pos));
                 pos++;
                 if (tokens.get(pos).equals("(")) {
                     pos++;
                     if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
                         pos++;
                         if (tokens.get(pos).equals(")")) {
-
+                            instrucciones();
                         } else {
                             error(10);
                         }
@@ -308,10 +313,16 @@ public class lexico {
                     if (tokens.get(pos).equals("=")) {
                         aux2();
                         Operadores();
-                        aux9();
+                        aux9(); // 9 
                     } else {
                         error(8);
                     }
+                } else if (tokens.get(pos).equals("funcioncita") || tokens.get(pos).equals("mainsito") || tokens.get(pos).equals("voidsito")) {
+                    pos--;
+                    pie();
+                } else if (tokens.get(pos).equals("returnsito")) {
+                    pos--;
+
                 } else {
                     error(7);
                 }
@@ -323,7 +334,7 @@ public class lexico {
 //<Pie>::= voidsito Ident : <Instrucciones><Aux3>
 //FIRST(Pie) = {FIRST(Aux1) + “voidsito”} = {“funcioncita” + “mainsito” + “voidsito”}
     private void pie() {
-        pos++;
+        pos++; //;
         if (tokens.get(pos).equals("voidsito")) {
             pos++;
             if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
@@ -345,10 +356,13 @@ public class lexico {
                 pos++;
                 if (tokens.get(pos).equals(":")) {
                     instrucciones();
+                    // pie();
                     pos++;
                     if (tokens.get(pos).equals("returnsito")) {
+                        System.out.println("Me meti a este return");
                         aux2();
                         aux3();
+
                     } else {
                         error(19);
                     }
@@ -357,6 +371,22 @@ public class lexico {
                 }
             } else {
                 error(3);
+            }
+        } else if (tokens.get(pos).equals(";")) {
+            System.out.println("Me mwtí a el punto y coma  y ya");
+           pie();
+        
+        } else if (tokens.get(pos).equals("returnsito")) {
+            pos++;
+            if (tokens.get(pos).equals("0")) {
+                pos++;
+                if(tokens.get(pos).equals(";")){
+                    System.out.println("Valiendo riata");
+                }else{
+                error(5);
+                }
+            }else{
+             error(25);
             }
         } else {
             error(22);
@@ -392,6 +422,9 @@ public class lexico {
         pos++;
         if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
 
+        } else if (lectorArchivo.tabla.containsValue(tokens.get(pos))) {
+            pos--;
+            System.out.println("aux2 pos : " + tokens.get(pos));
         } else {
             error(13);
         }
@@ -430,28 +463,33 @@ public class lexico {
         System.out.println("Voy en" + tokens.get(pos));
         switch (tokens.get(pos)) {
             case "+":
-
+                pos++;
                 break;
             case "-":
+                pos++;
 
                 break;
             case "*":
+                pos++;
 
                 break;
             case "/":
+                pos++;
 
                 break;
             case "++":
+                pos++;
 
                 break;
             case "--":
+                pos++;
 
                 break;
             default:
-                if(tokens.get(pos).equals(";")){
-                
-                }else{
-                error(15);
+                if (tokens.get(pos).equals(";")) {
+
+                } else {
+                    error(15);
                 }
                 break;
         }
@@ -461,16 +499,24 @@ public class lexico {
 //<Aux9>::= ;
 //FIRST(Aux9) = {FIRST(Aux2) + “;”} = {“Num” + “Ident” + “;”}
     private void aux9() {
-        pos++;
+        //pos++;
+        System.out.println("Estos es lo que hay: " + tokens.get(pos));
+        System.out.println("Resultado de " + tokens.get(pos) + " funcion validar : " + lectorArchivo.validarIdentNum(tokens.get(pos)));
         if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
             pos--;
+            System.out.println("Estos es lo que hay: " + tokens.get(pos));
+
             aux2();
             Operadores();
+            //pos--;
             aux2();
+            //pos--;
             aux9();
-            
+
         } else if (tokens.get(pos).equals(";")) {
-                instrucciones();
+            pos--;
+            System.out.println("Estos es lo que hay: " + tokens.get(pos));
+
         } else {
             error(23);
         }
@@ -497,6 +543,7 @@ public class lexico {
                 && !tokens.get(pos).equals("returnsito")
                 && !tokens.get(pos).equals(";")) {
             pos--;
+            System.out.println("aux8 tiene en pos : " + tokens.get(pos));
             instrucciones();
         } else {
             pos--;
@@ -518,11 +565,54 @@ public class lexico {
                 && !tokens.get(pos).equals(";")) {
             switch (tokens.get(pos)) {
                 case "else":
+                    pos++;
+                    if (tokens.get(pos).equals("then")) {
+                        instrucciones();
+                        pos++;
+                        if (tokens.get(pos).equals(";")) {
+                            auxSino();
+
+                        } else {
+                            error(5);
+                        }
+                    } else {
+                        error(12);
+                    }
                     break;
                 case "elsif":
+                    pos++;
+                    if (tokens.get(pos).equals("(")) {
+                        Condicion();
+                        pos++;
+                        if (tokens.get(pos).equals(")")) {
+                            pos++;
+                            if (tokens.get(pos).equals("then")) {
+                                instrucciones();
+                                pos++;
+                                if (tokens.get(pos).equals(";")) {
+                                    auxSino();
+
+                                } else {
+                                    error(5);
+                                }
+                            } else {
+                                error(12);
+                            }
+                        } else {
+                            error(10);
+                        }
+
+                    } else {
+                        error(9);
+                    }
                     break;
                 default:
-                    error(21);
+                    pos--;
+                    if (tokens.get(pos).equals(";")) {
+
+                    } else {
+                        error(21);
+                    }
                     break;
             }
         } else {
@@ -688,16 +778,18 @@ public class lexico {
         palabritas.add(palabra);
         System.out.println(la.mensaje(la.validarCadena(palabra)));
         System.out.println();
+        int i = 0;
         while (la.mensaje(la.validarCadena(palabra)).equals("Cadena válida")) {
             palabra = la.tokenizar(archivos);
             if (!la.mensaje(la.validarCadena(palabra)).equals("Cadena válida")) {
 
             } else {
-                System.out.println(palabra);
+                System.out.println("POS " + i + " : " + palabra);
                 palabritas.add(palabra);
                 System.out.println(la.mensaje(la.validarCadena(palabra)));
                 System.out.println();
             }
+            i++;
         }
 
         lexico lex = new lexico(palabritas);
