@@ -363,6 +363,8 @@ public class lexico {
                         aux2();
                         aux3();
 
+                    }else if (tokens.get(pos).equals("}")) {
+                      pos--;
                     } else {
                         error(19);
                     }
@@ -421,11 +423,15 @@ public class lexico {
     private void aux2() {
         pos++;
         if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
+             System.out.println("aux2 if entró pos : " + tokens.get(pos));
 
         } else if (lectorArchivo.tabla.containsValue(tokens.get(pos))) {
             pos--;
             System.out.println("aux2 pos : " + tokens.get(pos));
+        } else if (tokens.get(pos).equals(";")) {
+          
         } else {
+             System.out.println("aux2 else pos : " + tokens.get(pos));
             error(13);
         }
     }
@@ -466,27 +472,29 @@ public class lexico {
                 pos++;
                 break;
             case "-":
-                pos++;
+               pos++;
 
                 break;
             case "*":
-                pos++;
+               pos++;
 
                 break;
             case "/":
-                pos++;
+              pos++;
 
                 break;
             case "++":
-                pos++;
+               pos++;
 
                 break;
             case "--":
-                pos++;
+               pos++;
 
                 break;
             default:
                 if (tokens.get(pos).equals(";")) {
+
+                }else if (tokens.get(pos).equals("=")) {
 
                 } else {
                     error(15);
