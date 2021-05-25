@@ -27,6 +27,7 @@ public class lectorArchivo {
     char comparar;
     static HashMap<Integer, String> tabla = new HashMap();
 
+
     public File leerDatos() throws IOException {
         // ventana para abrir el txtr
 
@@ -321,7 +322,7 @@ public class lectorArchivo {
             }
         }
 
-        lexico lex = new lexico(palabritas);
+        sintactico lex = new sintactico(palabritas);
 
         lex.programa();
     }

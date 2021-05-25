@@ -13,12 +13,12 @@ import java.util.ArrayList;
  *
  * @author Dell
  */
-public class lexico {
+public class sintactico {
 
     ArrayList<String> tokens;
     int pos = 0;
 
-    public lexico(ArrayList<String> palabritas) {
+    public sintactico(ArrayList<String> palabritas) {
         this.tokens = palabritas;
     }
 
@@ -314,6 +314,7 @@ public class lexico {
                         aux2();
                         Operadores();
                         aux9(); // 9 
+                       
                     } else {
                         error(8);
                     }
@@ -341,6 +342,8 @@ public class lexico {
                 pos++;
                 if (tokens.get(pos).equals(":")) {
                     instrucciones();
+                    pos++;
+                    aux100();
                     aux3();
                 } else {
                     error(18);
@@ -349,6 +352,7 @@ public class lexico {
                 error(3);
             }
         } else if (tokens.get(pos).equals("funcioncita") || tokens.get(pos).equals("mainsito")) {
+            
             pos--;
             aux1();
             pos++;
@@ -358,8 +362,9 @@ public class lexico {
                     instrucciones();
                     // pie();
                     pos++;
+                    aux100();
                     if (tokens.get(pos).equals("returnsito")) {
-                        System.out.println("Me meti a este return");
+                        System.out.println("Me meti a este return de funcioncit mainsito");
                         aux2();
                         aux3();
 
@@ -376,7 +381,11 @@ public class lexico {
             }
         } else if (tokens.get(pos).equals(";")) {
             System.out.println("Me mwtí a el punto y coma  y ya");
-           pie();
+         //   pos++;
+            if(tokens.get(pos+1).equals("}")){
+              
+            }else{
+           pie();}
         
         } else if (tokens.get(pos).equals("returnsito")) {
             pos++;
@@ -393,6 +402,26 @@ public class lexico {
         } else {
             error(22);
         }
+    }
+    
+    public void aux100(){
+                  if((tokens.get(pos).equals(";")) ){
+                    pos++;
+                                            System.out.println("MIerdita ; "+ tokens.get(pos));
+
+                    if(tokens.get(pos).equals("Run") || (tokens.get(pos).equals("whilesito")) || (tokens.get(pos).equals("ifsito"))){
+                        pos--;
+                        instrucciones();
+                        pos++;
+                        aux100();
+                    }}else if(tokens.get(pos).equals("mainsito") || (tokens.get(pos).equals("funcioncita")) || (tokens.get(pos).equals("voidsito"))){
+                        System.out.println("MIerdita");
+                      pos--;
+                      pie();
+                    
+                    
+                    }
+    
     }
 
 //<Aux55>::= ε 
@@ -800,7 +829,7 @@ public class lexico {
             i++;
         }
 
-        lexico lex = new lexico(palabritas);
+        sintactico lex = new sintactico(palabritas);
 
         lex.programa();
     }
