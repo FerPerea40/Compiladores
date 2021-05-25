@@ -28,7 +28,7 @@ public class sintactico {
         if (tokens.get(pos).equals("{")) {
             encabezado();
             pie();
-            System.out.println("Si pas ele pie del programa");
+           // System.out.println("Si pas ele pie del programa");
             if (tokens.get(tokens.size()-1).equals("}")) {
                 System.out.println("Compilo Correctamente");
             } else {
@@ -289,7 +289,7 @@ public class sintactico {
                 }
                 break;
             case "Run":
-                System.out.println("Entre al caso RUN perritos con :" + tokens.get(pos));
+                //System.out.println("Entre al caso RUN  con :" + tokens.get(pos));
                 pos++;
                 if (tokens.get(pos).equals("(")) {
                     pos++;
@@ -364,7 +364,7 @@ public class sintactico {
                     pos++;
                     aux100();
                     if (tokens.get(pos).equals("returnsito")) {
-                        System.out.println("Me meti a este return de funcioncit mainsito");
+                    //    System.out.println("Me meti a este return de funcioncit mainsito");
                         aux2();
                         aux3();
 
@@ -380,7 +380,7 @@ public class sintactico {
                 error(3);
             }
         } else if (tokens.get(pos).equals(";")) {
-            System.out.println("Me mwtí a el punto y coma  y ya");
+           // System.out.println("Me mwtí a el punto y coma  y ya");
          //   pos++;
             if(tokens.get(pos+1).equals("}")){
               
@@ -392,7 +392,6 @@ public class sintactico {
             if (tokens.get(pos).equals("0")) {
                 pos++;
                 if(tokens.get(pos).equals(";")){
-                    System.out.println("Valiendo riata");
                 }else{
                 error(5);
                 }
@@ -407,7 +406,7 @@ public class sintactico {
     public void aux100(){
                   if((tokens.get(pos).equals(";")) ){
                     pos++;
-                                            System.out.println("MIerdita ; "+ tokens.get(pos));
+                                            //System.out.println("Aqui ando ; "+ tokens.get(pos));
 
                     if(tokens.get(pos).equals("Run") || (tokens.get(pos).equals("whilesito")) || (tokens.get(pos).equals("ifsito"))){
                         pos--;
@@ -415,7 +414,7 @@ public class sintactico {
                         pos++;
                         aux100();
                     }}else if(tokens.get(pos).equals("mainsito") || (tokens.get(pos).equals("funcioncita")) || (tokens.get(pos).equals("voidsito"))){
-                        System.out.println("MIerdita");
+                        //System.out.println("aqui ando 2");
                       pos--;
                       pie();
                     
@@ -430,7 +429,7 @@ public class sintactico {
 //FOLLOWS(Aux55)= {FOLLOWS(Aux21)+FOLLOWS(Aux4)} =  {“ifsito” + “whilesito” + “Run” + “Ident”} 
     private void aux55() {
         pos++;//TALVEZ!!!
-        System.out.println("antes del if " + !lectorArchivo.validarIdentNum(tokens.get(pos)));
+      //  System.out.println("antes del if " + !lectorArchivo.validarIdentNum(tokens.get(pos)));
 
         if (!tokens.get(pos).equals("ifsito")
                 && !tokens.get(pos).equals("whilesito")
@@ -438,7 +437,7 @@ public class sintactico {
                 && !lectorArchivo.validarIdentNum(tokens.get(pos))) {
             pos--;
 
-            System.out.println("SI me meti putos  --- " + lectorArchivo.validarIdentNum(tokens.get(pos)));
+            //System.out.println("SI me meti hermosos  --- " + lectorArchivo.validarIdentNum(tokens.get(pos)));
             encabezado();
         } else {
             pos--;
@@ -452,15 +451,15 @@ public class sintactico {
     private void aux2() {
         pos++;
         if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
-             System.out.println("aux2 if entró pos : " + tokens.get(pos));
+            // System.out.println("aux2 if entró pos : " + tokens.get(pos));
 
         } else if (lectorArchivo.tabla.containsValue(tokens.get(pos))) {
             pos--;
-            System.out.println("aux2 pos : " + tokens.get(pos));
+          //  System.out.println("aux2 pos : " + tokens.get(pos));
         } else if (tokens.get(pos).equals(";")) {
           
         } else {
-             System.out.println("aux2 else pos : " + tokens.get(pos));
+           //  System.out.println("aux2 else pos : " + tokens.get(pos));
             error(13);
         }
     }
@@ -495,7 +494,7 @@ public class sintactico {
 //FIRST(Operadores) = {“+” + “-” + “*” + “/”}
     private void Operadores() {
         pos++;
-        System.out.println("Voy en" + tokens.get(pos));
+        //System.out.println("Voy en" + tokens.get(pos));
         switch (tokens.get(pos)) {
             case "+":
                 pos++;
@@ -537,11 +536,11 @@ public class sintactico {
 //FIRST(Aux9) = {FIRST(Aux2) + “;”} = {“Num” + “Ident” + “;”}
     private void aux9() {
         //pos++;
-        System.out.println("Estos es lo que hay: " + tokens.get(pos));
-        System.out.println("Resultado de " + tokens.get(pos) + " funcion validar : " + lectorArchivo.validarIdentNum(tokens.get(pos)));
+       // System.out.println("Estos es lo que hay: " + tokens.get(pos));
+        //System.out.println("Resultado de " + tokens.get(pos) + " funcion validar : " + lectorArchivo.validarIdentNum(tokens.get(pos)));
         if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
             pos--;
-            System.out.println("Estos es lo que hay: " + tokens.get(pos));
+          //  System.out.println("Estos es lo que hay: " + tokens.get(pos));
 
             aux2();
             Operadores();
@@ -552,7 +551,7 @@ public class sintactico {
 
         } else if (tokens.get(pos).equals(";")) {
             pos--;
-            System.out.println("Estos es lo que hay: " + tokens.get(pos));
+          //  System.out.println("Estos es lo que hay: " + tokens.get(pos));
 
         } else {
             error(23);
@@ -580,7 +579,7 @@ public class sintactico {
                 && !tokens.get(pos).equals("returnsito")
                 && !tokens.get(pos).equals(";")) {
             pos--;
-            System.out.println("aux8 tiene en pos : " + tokens.get(pos));
+          //  System.out.println("aux8 tiene en pos : " + tokens.get(pos));
             instrucciones();
         } else {
             pos--;
@@ -821,7 +820,7 @@ public class sintactico {
             if (!la.mensaje(la.validarCadena(palabra)).equals("Cadena válida")) {
 
             } else {
-                System.out.println("POS " + i + " : " + palabra);
+               // System.out.println("POS " + i + " : " + palabra);
                 palabritas.add(palabra);
                 System.out.println(la.mensaje(la.validarCadena(palabra)));
                 System.out.println();
