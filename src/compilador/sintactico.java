@@ -17,9 +17,12 @@ public class sintactico {
 
     ArrayList<String> tokens;
     int pos = 0;
-
+    public Semantico sema;
+    
     public sintactico(ArrayList<String> palabritas) {
         this.tokens = palabritas;
+        sema = new Semantico();
+        
     }
 
 //<Programa>::= {<Encabezado><Instrucciones><Pie>}
@@ -44,11 +47,13 @@ public class sintactico {
 //FIRST(Encabezado) = {“CF”+ “Constant”}
     public void encabezado() {
         pos++;
+        String tipo;
         switch (tokens.get(pos)) {
             case "CF":
-                tipo();
+                tipo = tipo();
                 pos++;
                 if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
+                    sema.poner(tipo, tokens.get(pos));
                     aux21();
                 } else {
                     error(3);
@@ -163,7 +168,7 @@ public class sintactico {
         pos++;
         switch (tokens.get(pos)) {
             case ";":
-                System.out.println("Si entre al aux21");
+                //System.out.println("Si entre al aux21");
                 aux55();
                 break;
             case "=":
@@ -189,11 +194,13 @@ public class sintactico {
 //<Tipo>::= Enterito
 //
 //FIRST(Tipo)={“Enterito”+”Flotantito”+”Doublesito”+”Stringsito”+”Charsito”+”Enterito”}
-    private void tipo() {
+    private String tipo() {
         pos++;
+        String result;
+        result = tokens.get(pos);
         switch (tokens.get(pos)) {
             case "Enterito":
-
+                
                 break;
             case "Flotantito":
 
@@ -208,9 +215,11 @@ public class sintactico {
 
                 break;
             default:
+                result = "Error";
                 error(6);
                 break;
         }
+        return result;
     }
 
 //    <Aux5>::= Ident <Aux7>
@@ -218,7 +227,7 @@ public class sintactico {
     private void aux5() {
         pos++;
         if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
-            aux7();
+            aux4();
         } else {
             error(3);
         }
