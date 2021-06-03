@@ -227,7 +227,7 @@ public class sintactico {
     private void aux5() {
         pos++;
         if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
-            aux4();
+            aux4(tokens.get(pos));
         } else {
             error(3);
         }
@@ -476,25 +476,25 @@ public class sintactico {
 //<Aux7> ::= ; <Aux4>
 //<Aux7>::= , Ident <Aux5>
 //FIRST(Aux7) = {“;” + “,”}
-    private void aux7() {
-        pos++;
-        switch (tokens.get(pos)) {
-            case ";":
-                aux4();
-                break;
-            case ",":
-                pos++;
-                if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
-                    aux5();
-                } else {
-                    error(3);
-                }
-                break;
-            default:
-                error(14);
-                break;
-        }
-    }
+//    private void aux7() {
+//        pos++;
+//        switch (tokens.get(pos)) {
+//            case ";":
+//                aux4();
+//                break;
+//            case ",":
+//                pos++;
+//                if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
+//                    aux5();
+//                } else {
+//                    error(3);
+//                }
+//                break;
+//            default:
+//                error(14);
+//                break;
+//        }
+//    }
 
 //<Operadores>::= +
 //<Operadores>::= -
@@ -668,11 +668,11 @@ public class sintactico {
 //<Aux4>::= : <Tipo> := <Aux2> ; <Aux55>
 //<Aux4>::=  , Ident <Aux5>
 //FIRST(Aux4) = {“:” + “,”} 
-    private void aux4() {
+    private void aux4(String ident) {
         pos++;
         switch (tokens.get(pos)) {
-            case ":":
-                tipo();
+            case ":":             
+                sema.poner(tipo(), ident);
                 pos++;
                 if (tokens.get(pos).equals(":")) {
                     pos++;
