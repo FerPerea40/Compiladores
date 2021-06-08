@@ -53,8 +53,12 @@ public class sintactico {
                 tipo = tipo();
                 pos++;
                 if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
-                    sema.poner(tipo, tokens.get(pos));
+                    if(tokens.get(pos+1).equals(";")){
+                    sema.poner(tipo, tokens.get(pos),null);
+                    }else{
+                     sema.poner(tipo, tokens.get(pos),tokens.get(pos+2));}
                     aux21();
+                   
                 } else {
                     error(3);
                 }
@@ -671,13 +675,15 @@ public class sintactico {
     private void aux4(String ident) {
         pos++;
         switch (tokens.get(pos)) {
-            case ":":             
-                sema.poner(tipo(), ident);
+            case ":":   
+                String tipo = tipo();
                 pos++;
                 if (tokens.get(pos).equals(":")) {
                     pos++;
                     if (tokens.get(pos).equals("=")) {
                         aux2();
+                        sema.poner(tipo, ident,tokens.get(pos));
+
                         pos++;
                         if (tokens.get(pos).equals(";")) {
                             aux55();
