@@ -14,21 +14,28 @@ import java.util.Map;
  * @author carli
  */
 public class Semantico {
-    public Map<String, String> variables;
+    public Map<String, ArrayList<String>> variables;
     
     public Semantico(){
-        variables = new HashMap<String,String>();
+        variables = new HashMap<String,ArrayList<String>>();
     }
     
     public void poner(String tipo, String ident){
-        
-        if(variables.containsValue(ident)){
-            error(1);
+        if(variables.containsKey(tipo)){
+        ArrayList<String> identificadores = variables.get(tipo);
+        if(identificadores.contains(ident)){
+        error(1);        
+        }else{
+        variables.get(tipo).add(ident);
+              }
         }else if(tipo.equals("Error")){
             error(2);
         }else{
-            variables.put(tipo, ident);
+            ArrayList<String> i = new ArrayList<>();
+            i.add(ident);
+            variables.put(tipo, i);
         }
+       
         
     }
     
