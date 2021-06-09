@@ -575,8 +575,11 @@ public class sintactico {
 //FIRST(Condición) = FIRST(Aux2) = {“Num” + “Ident} 
     private void Condicion() {
         aux2();
+        sema.verificardeclarado(tokens.get(pos));
         comparadores();
         aux2();
+         sema.verificardeclarado(tokens.get(pos));
+         sema.verificardeclarado(tokens.get(pos-2), tokens.get(pos));
         aux10();
     }
 
@@ -756,8 +759,12 @@ public class sintactico {
             pos--;
             aux11();
             aux2();
+              sema.verificardeclarado(tokens.get(pos));
+
             comparadores();
             aux2();
+              sema.verificardeclarado(tokens.get(pos));
+              sema.verificardeclarado(tokens.get(pos-2), tokens.get(pos));
             aux10();
         } else {
             pos--;
