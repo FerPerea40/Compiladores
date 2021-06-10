@@ -48,8 +48,8 @@ public class Semantico {
 
     public void verificardeclarado(String variable) {
 
-        if (variable.charAt(0) >= 48 && variable.charAt(0) <= 57) {
-            System.out.println("No es cierto y tu lo sabes");
+        if ((variable.charAt(0) >= 48 && variable.charAt(0) <= 57) || variable.charAt(0) == ';' ) {
+         //   System.out.println("No es cierto y tu lo sabes");
         } else {
             int i = 0;
 
@@ -91,7 +91,7 @@ public class Semantico {
             }
         }
 
-        if (variable.charAt(0) >= 48 && variable.charAt(0) <= 57 && variable2.charAt(0) >= 48 && variable2.charAt(0) <= 57) {
+        if ((variable.charAt(0) >= 48 && variable.charAt(0) <= 57 && variable2.charAt(0) >= 48 && variable2.charAt(0) <= 57) || variable2.charAt(0) == ';') {
             System.out.println("No es cierto y tu lo sabes");
         } 
         else if (!(variable.charAt(0) >= 48 && variable.charAt(0) <= 57) && variable2.charAt(0) >= 48 && variable2.charAt(0) <= 57) {

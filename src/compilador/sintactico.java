@@ -322,11 +322,15 @@ public class sintactico {
                 break;
             default:
                 if (lectorArchivo.validarIdentNum(tokens.get(pos))) {
+                    sema.verificardeclarado(tokens.get(pos));
+                    String primerito = tokens.get(pos);
                     pos++;
                     if (tokens.get(pos).equals("=")) {
                         aux2();
+                        sema.verificardeclarado(tokens.get(pos));
+                      //  sema.verificardeclarado(primerito, tokens.get(pos));
                         Operadores();
-                        aux9(); // 9 
+                        aux9(primerito); // 9 
                        
                     } else {
                         error(8);
@@ -547,7 +551,7 @@ public class sintactico {
 //<Aux9>::= <Aux2> <Operadores> 
 //<Aux9>::= ;
 //FIRST(Aux9) = {FIRST(Aux2) + “;”} = {“Num” + “Ident” + “;”}
-    private void aux9() {
+    private void aux9(String primerito) {
         //pos++;
        // System.out.println("Estos es lo que hay: " + tokens.get(pos));
         //System.out.println("Resultado de " + tokens.get(pos) + " funcion validar : " + lectorArchivo.validarIdentNum(tokens.get(pos)));
@@ -556,11 +560,16 @@ public class sintactico {
           //  System.out.println("Estos es lo que hay: " + tokens.get(pos));
 
             aux2();
+            sema.verificardeclarado(tokens.get(pos));
+          //  sema.verificardeclarado(primerito, tokens.get(pos));
             Operadores();
             //pos--;
             aux2();
+             sema.verificardeclarado(tokens.get(pos));
+           //  sema.verificardeclarado(primerito, tokens.get(pos));
+
             //pos--;
-            aux9();
+            aux9(primerito);
 
         } else if (tokens.get(pos).equals(";")) {
             pos--;
